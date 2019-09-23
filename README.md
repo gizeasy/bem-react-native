@@ -5,9 +5,14 @@
 ##### inspired by className package
 ##### https://github.com/bem/bem-react/tree/master/packages/classname
 
+### Install:
+
+```yarn add bem-react-native``` or ```npm i bem-react-native```
+
 ### Usage:
  
- ```import { s } from '@bem-react/classname';
+ ```
+ import { s } from 'bem-react-native';
  import style from 'path/to/style'
  const sCat = s('Cat')(style);
  
