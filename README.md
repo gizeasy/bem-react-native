@@ -1,5 +1,10 @@
 # react-native-bem
 
+### Tiny helper for building styles with BEM methodology. 
+
+##### inspired by className package
+##### https://github.com/bem/bem-react/tree/master/packages/classname
+
 ### Usage:
  
  ```import { s } from '@bem-react/classname';
