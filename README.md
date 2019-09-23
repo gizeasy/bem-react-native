@@ -1,4 +1,4 @@
-# react-native-bem
+# bem-react-native
 
 ### Tiny helper for building styles with BEM methodology. 
 

@@ -1,5 +1,5 @@
 {
-  "name": "react-native-bem",
+  "name": "bem-react-native",
   "version": "1.0.0",
   "description": "Tiny helper for building styles with BEM methodology.",
   "main": "index.js",
@@ -12,7 +12,10 @@
   },
   "keywords": [
     "bem",
-    "react-native-bem"
+    "react-native-bem",
+    "bem-react-native",
+    "style",
+    "stylesheet"
   ],
   "author": "gizeasy",
   "license": "ISC",
