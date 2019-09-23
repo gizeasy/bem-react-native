@@ -38,4 +38,4 @@
  <View style={[style['Dog-Paw'], style['Dog-Paw_color_black'], style['Dog-Paw_exists]]}/>
  ```
 
- #####see https://en.bem.info/methodology/naming-convention/#react-style
+ ##### see https://en.bem.info/methodology/naming-convention/#react-style
