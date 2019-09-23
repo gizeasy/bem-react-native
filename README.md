@@ -1,6 +1,6 @@
 # react-native-bem
 
- ###Usage:
+### Usage:
  
  ```import { s } from '@bem-react/classname';
  import style from 'path/to/style'
