@@ -1,6 +1,6 @@
 {
   "name": "bem-react-native",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Tiny helper for building styles with BEM methodology.",
   "main": "index.js",
   "scripts": {
