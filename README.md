@@ -128,7 +128,7 @@ export const Example = ({ style }) => {
                 //     textStyle['Text_size_l'],
                 //     textStyle['Text_weight_medium'],
                 //     textStyle['Text_uppercase'],
-                //     textStyle['Example-Text'],
+                //     exampleStyle['Example-Text'],
                 // ];
             }
         </View>
