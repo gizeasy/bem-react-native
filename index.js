@@ -54,41 +54,46 @@ function withNaming(preset) {
     };
 }
 /**
- * Usage:
- *
- * import { s } from '@bem-react/classname';
- * import style from 'path/to/style'
- * const sCat = s('Cat')(style);
- *
- * sCat(); // Cat
- * <View style={sCat()}/> //
- * eq: <View style={style['Cat']}/>
- *
- * sCat({ size: 'm' }); // Cat Cat_size_m
- * <View style={sCat({ size: 'm' })}/> //
- * eq: <View style={[style['Cat'], style['Cat_size_m']]}/>
- *
- * sCat('Tail'); // Cat-Tail
- * <View style={sCat()}/> //
- * eq: <View style={style['Cat']}/>
- *
- * sCat('Tail', { length: 'small' }); // Cat-Tail Cat-Tail_length_small
- * <View style={sCat('Tail', { length: 'small' })}/> //
- * eq:<View style={[style['Cat-Tail'], style['Cat-Tail_length_small']]}/>
- *
- * const sDogPaw = s('Dog', 'Paw')(style);
- *
- * sDogPaw(); // Dog-Paw
- * <View style={sDogPaw()}/> //
- * eq: <View style={style['Dog-Paw']}/>
- *
- * sDogPaw({ color: 'black', exists: true }); // Dog-Paw Dog-Paw_color_black Dog-Paw_exists
- * <View style={sDogPaw({ color: 'black', exists: true })}/> // eq:
- * <View style={[style['Dog-Paw'], style['Dog-Paw_color_black'], style['Dog-Paw_exists]]}/>
- * ```
- *
- * @see https://en.bem.info/methodology/naming-convention/#react-style
- *
+ Usage:
+ import { s } from 'bem-react-native';
+ import style from 'path/to/style'
+
+ const sCat = s('Cat')(style);
+
+ sCat();
+ // style['Cat']
+
+ sCat({ size: 'm' });
+ // [style['Cat'], style['Cat_size_m']]
+
+ sCat('Tail');
+ // style['Cat-Tail']
+
+ sCat('Tail', { length: 'small' });
+ // [style['Cat-Tail'], style['Cat-Tail_length_small']]
+
+ const sDogPaw = s('Dog', 'Paw')(style);
+
+ sDogPaw();
+ // style['Dog-Paw']
+
+ sDogPaw({ color: 'black', exists: true });
+ // [style['Dog-Paw'], style['Dog-Paw_color_black'], style['Dog-Paw_exists]]
+
+ const sBlockElement = s('Block','Element')(style);
+ const sMix = s('Mix')(style);
+
+ sBlockElement({mod: 'value'}, sMix({mod: 'value'}));
+ // [style['Block-Element'], style['Block-Element_mod_value'], style['Mix'], style['Mix_mod_value']]
+
+ sBlockElement({mod: 'value'}, [sMix({mod: 'value'}), {color: '#fff'}]);
+ // [style['Block-Element'], style['Block-Element_mod_value'], style['Mix'], style['Mix_mod_value'], {color: '#fff'}]
+
+ sBlockElement({mod: 'value'}, [{color: '#fff'}]);
+ // [style['Block-Element'], style['Block-Element_mod_value'], {color: '#fff'}]
+
+ @see https://en.bem.info/methodology/naming-convention/#react-style
+
  */
 const s = withNaming({
     e: '-',
