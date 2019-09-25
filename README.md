@@ -106,7 +106,7 @@ const exampleStyle = StyleSheet.create({
 
 const sText = s('Text')(textStyle);
 
-const Text = ({ children, style, size, weight, uppercase, lowercase, ...props }) => {
+const Text = ({ style, children, size, weight, uppercase, lowercase, ...props }) => {
     return (
         <RnText style={sText({ size, weight, uppercase, lowercase }, style)} {...props}>
             {children}
