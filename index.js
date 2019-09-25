@@ -1,22 +1,34 @@
 'use strict';
 
+function modsJoin(mods) {
+    let str = mods[0].toString();
+    for (let i = 1, len = mods.length; i < len; i++) {
+        const stringArgument = mods[i].toString();
+        str += stringArgument.charAt(0).toUpperCase() + stringArgument.substr(1);
+    }
+    return str;
+}
+
 function withNaming(preset) {
     const nameSpace = preset.n || '';
     const modValueDelimiter = preset.v || preset.m;
 
     function stringify(b, e, m, mix, styleSheet) {
         const entityName = e ? nameSpace + b + preset.e + e : nameSpace + b;
-        let className = [styleSheet[entityName]];
-
+        let styles = [styleSheet[entityName]];
         if (m) {
             const modPrefix = entityName + preset.m;
             for (let k in m) {
                 if (m.hasOwnProperty(k)) {
                     const modVal = m[k];
                     if (modVal === true) {
-                        className.push(styleSheet[`${modPrefix + k}`]);
+                        styles.push(styleSheet[`${modPrefix + k}`]);
+                    } else if (Array.isArray(modVal)) {
+                        styles.push(
+                            styleSheet[`${modPrefix + k + modValueDelimiter + modsJoin(modVal)}`]
+                        );
                     } else if (modVal) {
-                        className.push(styleSheet[`${modPrefix + k + modValueDelimiter + modVal}`]);
+                        styles.push(styleSheet[`${modPrefix + k + modValueDelimiter + modVal}`]);
                     }
                 }
             }
@@ -24,18 +36,12 @@ function withNaming(preset) {
         if (mix !== undefined) {
             for (let i = 0, len = mix.length; i < len; i++) {
                 if (typeof mix[i] === 'object') {
-                    className.push(mix[i]);
-                }
-                if (typeof mix[i] === 'array') {
-                    for (let ii = 0, len = mix[i].length; ii < len; ii++) {
-                        if (typeof mix[i][ii] !== 'object' || !mix[i][ii]) continue;
-                        className.push(mix[i][ii]);
-                    }
+                    styles.push(mix[i]);
                 }
             }
         }
 
-        return className;
+        return styles;
     }
     return function cnGenerator(b, e) {
         return function(styleSheet) {
@@ -53,7 +59,6 @@ function withNaming(preset) {
         };
     };
 }
-
 /**
  Usage:
  import { s } from 'bem-react-native';
@@ -102,3 +107,4 @@ const s = withNaming({
 });
 
 module.exports.s = s;
+module.exports.modsJoin = modsJoin;

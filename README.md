@@ -26,8 +26,8 @@ sCat({ size: 'm' });
 sCat('Tail'); 
 // style['Cat-Tail']
 
-sCat('Tail', { length: 'small' }); 
-// [style['Cat-Tail'], style['Cat-Tail_length_small']]
+sCat('Tail', { length: 'small', size: 'm', lengthSize: ['small', 'm'] }); 
+// [style['Cat-Tail'], style['Cat-Tail_length_small'], style['Cat-Tail_size_m'], style['Cat-Tail_lengthSize_smallM']]
  
 const sDogPaw = s('Dog', 'Paw')(style);
  
@@ -36,6 +36,9 @@ sDogPaw();
 
 sDogPaw({ color: 'black', exists: true }); 
 // [style['Dog-Paw'], style['Dog-Paw_color_black'], style['Dog-Paw_exists]]
+
+sDogPaw({ color: 'black', exists: true, colorExists: ['black', true] });
+// [style['Dog-Paw'], style['Dog-Paw_color_black'], style['Dog-Paw_exists], style['Dog-Paw_colorExists_blackTrue']]
 
 const sBlockElement = s('Block','Element')(style);
 const sMix = s('Mix')(style);
@@ -111,11 +114,35 @@ const exampleStyle = StyleSheet.create({
         padding: 20,
         color: '#cb0606',
     },
+    'Example-Text_globalTheme_light': {
+        //..//
+    },
+    'Example-Text_globalTheme_dark': {
+        //..//
+    },
+    'Example-Text_actionAccent_danger': {
+        //..//
+    },
+    'Example-Text_actionAccent_info': {
+        //..//
+    },
+    'Example-Text_globalThemeActionAccent_lightDanger': {
+        //..//
+    },
+    'Example-Text_globalThemeActionAccent_lightInfo': {
+        //..//
+    },
+    'Example-Text_globalThemeActionAccent_darkDanger': {
+        //..//
+    },
+    'Example-Text_globalThemeActionAccent_darkInfo': {
+        //..//
+    },
 });
 
 const sText = s('Text')(textStyle);
 
-const Text = ({ style, children, size, weight, uppercase, lowercase, align, ...props }) => {
+const Text = ({ children, style, size, weight, uppercase, lowercase, align, ...props }) => {
     return (
         <RnText style={sText({ size, weight, uppercase, lowercase, align }, style)} {...props}>
             {children}
@@ -125,10 +152,21 @@ const Text = ({ style, children, size, weight, uppercase, lowercase, align, ...p
 
 const sExample = s('Example')(exampleStyle);
 
-export const Example = ({ style }) => {
+export const Example = ({ style, globalTheme, actionAccent }) => {
+    // style = style, globalTheme = 'light', actionAccent = danger
     return (
         <View style={sExample(null, style)}>
-            <Text style={sExample('Text')} size="l" weight="medium" align="center" uppercase>
+            <Text
+                style={sExample('Text', {
+                    globalTheme,
+                    actionAccent,
+                    globalThemeActionAccent: [globalTheme, actionAccent],
+                })}
+                size="l"
+                weight="medium"
+                align="center"
+                uppercase
+            >
                 I love bem!
             </Text>
             {
@@ -138,6 +176,9 @@ export const Example = ({ style }) => {
                 //     textStyle['Text_weight_medium'],
                 //     textStyle['Text_uppercase'],
                 //     exampleStyle['Example-Text'],
+                //     exampleStyle['Example-Text_globalTheme_light'],
+                //     exampleStyle['Example-Text_actionAccent_danger'],
+                //     exampleStyle['Example-Text_globalThemeActionAccent_lightDanger'],
                 // ];
             }
         </View>
