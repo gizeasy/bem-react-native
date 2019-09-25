@@ -1,6 +1,6 @@
 {
   "name": "bem-react-native",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Tiny helper for building styles with BEM methodology.",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gizeasy/react-native-bem.git"
+    "url": "git+https://github.com/gizeasy/bem-react-native.git"
   },
   "keywords": [
     "bem",
@@ -18,9 +18,9 @@
     "stylesheet"
   ],
   "author": "gizeasy",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gizeasy/react-native-bem/issues"
+    "url": "https://github.com/gizeasy/bem-react-native/issues"
   },
-  "homepage": "https://github.com/gizeasy/react-native-bem#readme"
+  "homepage": "https://github.com/gizeasy/bem-react-native#readme"
 }

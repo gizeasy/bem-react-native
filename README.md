@@ -88,6 +88,15 @@ const textStyle = StyleSheet.create({
     Text_lowercase: {
         textTransform: 'lowercase',
     },
+    Text_align_center: {
+        textAlign: 'center',
+    },
+    Text_align_right: {
+        textAlign: 'right',
+    },
+    Text_align_left: {
+        textAlign: 'left',
+    },
 });
 
 const exampleStyle = StyleSheet.create({
@@ -98,17 +107,17 @@ const exampleStyle = StyleSheet.create({
         backgroundColor: '#ffffff',
     },
     'Example-Text': {
-        textAlign: 'center',
         marginBottom: 20,
+        padding: 20,
         color: '#cb0606',
     },
 });
 
 const sText = s('Text')(textStyle);
 
-const Text = ({ children, style, size, weight, uppercase, lowercase, ...props }) => {
+const Text = ({ style, children, size, weight, uppercase, lowercase, align, ...props }) => {
     return (
-        <RnText style={sText({ size, weight, uppercase, lowercase }, style)} {...props}>
+        <RnText style={sText({ size, weight, uppercase, lowercase, align }, style)} {...props}>
             {children}
         </RnText>
     );
@@ -119,7 +128,7 @@ const sExample = s('Example')(exampleStyle);
 export const Example = ({ style }) => {
     return (
         <View style={sExample(null, style)}>
-            <Text style={sExample('Text')} size="l" weight="medium" uppercase>
+            <Text style={sExample('Text')} size="l" weight="medium" align="center" uppercase>
                 I love bem!
             </Text>
             {
@@ -128,7 +137,7 @@ export const Example = ({ style }) => {
                 //     textStyle['Text_size_l'],
                 //     textStyle['Text_weight_medium'],
                 //     textStyle['Text_uppercase'],
-                //     textStyle['Example-Text'],
+                //     exampleStyle['Example-Text'],
                 // ];
             }
         </View>
