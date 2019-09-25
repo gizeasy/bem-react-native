@@ -53,6 +53,7 @@ function withNaming(preset) {
         };
     };
 }
+
 /**
  Usage:
  import { s } from 'bem-react-native';
