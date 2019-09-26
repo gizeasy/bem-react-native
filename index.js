@@ -6,38 +6,39 @@ function withNaming(preset) {
 
     function stringify(b, e, m, mix, styleSheet) {
         const entityName = e ? nameSpace + b + preset.e + e : nameSpace + b;
-        let className = [styleSheet[entityName]];
+        const styles = [styleSheet[entityName]];
 
         if (m) {
             const modPrefix = entityName + preset.m;
             for (let k in m) {
                 if (m.hasOwnProperty(k)) {
+                    let modName;
                     const modVal = m[k];
                     if (modVal === true) {
-                        className.push(styleSheet[`${modPrefix + k}`]);
+                        modName = `${modPrefix + k}`;
+                    } else if (Array.isArray(modVal)) {
+                        modName = `${modPrefix + k + modValueDelimiter + modVal.join(preset.cv)}`;
                     } else if (modVal) {
-                        className.push(styleSheet[`${modPrefix + k + modValueDelimiter + modVal}`]);
+                        modName = `${modPrefix + k + modValueDelimiter + modVal}`;
                     }
+                    styleSheet[modName] && styles.push(styleSheet[modName]);
                 }
             }
         }
         if (mix !== undefined) {
             for (let i = 0, len = mix.length; i < len; i++) {
                 if (typeof mix[i] === 'object') {
-                    className.push(mix[i]);
-                }
-                if (typeof mix[i] === 'array') {
+                    styles.push(mix[i]);
+                } else if (Array.isArray(mix[i])) {
                     for (let ii = 0, len = mix[i].length; ii < len; ii++) {
-                        if (typeof mix[i][ii] !== 'object' || !mix[i][ii]) continue;
-                        className.push(mix[i][ii]);
+                        styles.push(mix[i][ii]);
                     }
                 }
             }
         }
-
-        return className;
+        return styles;
     }
-    return function cnGenerator(b, e) {
+    return function sGenerator(b, e) {
         return function(styleSheet) {
             return function(elemOrMods, elemModsOrBlockMix, elemMix) {
                 if (typeof elemOrMods === 'string') {
@@ -70,8 +71,8 @@ function withNaming(preset) {
  sCat('Tail');
  // style['Cat-Tail']
 
- sCat('Tail', { length: 'small' });
- // [style['Cat-Tail'], style['Cat-Tail_length_small']]
+ sCat('Tail', { length: 'small', size: 'm', lengthSize: ['small', 'm'] });
+ // [style['Cat-Tail'], style['Cat-Tail_length_small'], style['Cat-Tail_size_m'], style['Cat-Tail_length-size_small-m']]
 
  const sDogPaw = s('Dog', 'Paw')(style);
 
@@ -80,6 +81,9 @@ function withNaming(preset) {
 
  sDogPaw({ color: 'black', exists: true });
  // [style['Dog-Paw'], style['Dog-Paw_color_black'], style['Dog-Paw_exists]]
+
+ sDogPaw({ color: 'black', exists: true, colorExists: ['black', true] });
+ // [style['Dog-Paw'], style['Dog-Paw_color_black'], style['Dog-Paw_exists], style['Dog-Paw_color-exists_black-true']]
 
  const sBlockElement = s('Block','Element')(style);
  const sMix = s('Mix')(style);
@@ -93,12 +97,15 @@ function withNaming(preset) {
  sBlockElement({mod: 'value'}, [{color: '#fff'}]);
  // [style['Block-Element'], style['Block-Element_mod_value'], {color: '#fff'}]
 
- @see https://en.bem.info/methodology/naming-convention/#react-style
+ @see https://github.com/gizeasy/bem-react-native
 
  */
 const s = withNaming({
     e: '-',
     m: '_',
+    v: '_',
+    cv: '-',
 });
 
 module.exports.s = s;
+module.exports.withNaming = withNaming;
