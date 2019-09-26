@@ -27,7 +27,7 @@ sCat('Tail');
 // style['Cat-Tail']
 
 sCat('Tail', { length: 'small', size: 'm', lengthSize: ['small', 'm'] }); 
-// [style['Cat-Tail'], style['Cat-Tail_length_small'], style['Cat-Tail_size_m'], style['Cat-Tail_lengthSize_smallM']]
+// [style['Cat-Tail'], style['Cat-Tail_length_small'], style['Cat-Tail_size_m'], style['Cat-Tail_length-size_small-m']]
  
 const sDogPaw = s('Dog', 'Paw')(style);
  
@@ -38,7 +38,7 @@ sDogPaw({ color: 'black', exists: true });
 // [style['Dog-Paw'], style['Dog-Paw_color_black'], style['Dog-Paw_exists]]
 
 sDogPaw({ color: 'black', exists: true, colorExists: ['black', true] });
-// [style['Dog-Paw'], style['Dog-Paw_color_black'], style['Dog-Paw_exists], style['Dog-Paw_colorExists_blackTrue']]
+// [style['Dog-Paw'], style['Dog-Paw_color_black'], style['Dog-Paw_exists], style['Dog-Paw_color-exists_black-true']]
 
 const sBlockElement = s('Block','Element')(style);
 const sMix = s('Mix')(style);
@@ -126,16 +126,16 @@ const exampleStyle = StyleSheet.create({
     'Example-Text_actionAccent_info': {
         //..//
     },
-    'Example-Text_globalThemeActionAccent_lightDanger': {
+    'Example-Text_globalTheme-accent_light-danger': {
         //..//
     },
-    'Example-Text_globalThemeActionAccent_lightInfo': {
+    'Example-Text_globalTheme-accent_light-info': {
         //..//
     },
-    'Example-Text_globalThemeActionAccent_darkDanger': {
+    'Example-Text_globalTheme-accent_dark-danger': {
         //..//
     },
-    'Example-Text_globalThemeActionAccent_darkInfo': {
+    'Example-Text_globalTheme-accent_dark-info': {
         //..//
     },
 });
@@ -152,7 +152,7 @@ const Text = ({ children, style, size, weight, uppercase, lowercase, align, ...p
 
 const sExample = s('Example')(exampleStyle);
 
-export const Example = ({ style, globalTheme, actionAccent }) => {
+export const Example = ({ style, globalTheme, accent }) => {
     // style = style, globalTheme = 'light', actionAccent = danger
     return (
         <View style={sExample(null, style)}>
@@ -160,7 +160,7 @@ export const Example = ({ style, globalTheme, actionAccent }) => {
                 style={sExample('Text', {
                     globalTheme,
                     actionAccent,
-                    globalThemeActionAccent: [globalTheme, actionAccent],
+                    'globalTheme-accent': [globalTheme, accent],
                 })}
                 size="l"
                 weight="medium"
@@ -177,8 +177,8 @@ export const Example = ({ style, globalTheme, actionAccent }) => {
                 //     textStyle['Text_uppercase'],
                 //     exampleStyle['Example-Text'],
                 //     exampleStyle['Example-Text_globalTheme_light'],
-                //     exampleStyle['Example-Text_actionAccent_danger'],
-                //     exampleStyle['Example-Text_globalThemeActionAccent_lightDanger'],
+                //     exampleStyle['Example-Text_accent_danger'],
+                //     exampleStyle['Example-Text_globalTheme-accent_light-danger']
                 // ];
             }
         </View>

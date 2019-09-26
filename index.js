@@ -71,8 +71,8 @@ function withNaming(preset) {
  sCat('Tail');
  // style['Cat-Tail']
 
- sCat('Tail', { length: 'small' });
- // [style['Cat-Tail'], style['Cat-Tail_length_small']]
+ sCat('Tail', { length: 'small', size: 'm', lengthSize: ['small', 'm'] });
+ // [style['Cat-Tail'], style['Cat-Tail_length_small'], style['Cat-Tail_size_m'], style['Cat-Tail_length-size_small-m']]
 
  const sDogPaw = s('Dog', 'Paw')(style);
 
@@ -81,6 +81,9 @@ function withNaming(preset) {
 
  sDogPaw({ color: 'black', exists: true });
  // [style['Dog-Paw'], style['Dog-Paw_color_black'], style['Dog-Paw_exists]]
+
+ sDogPaw({ color: 'black', exists: true, colorExists: ['black', true] });
+ // [style['Dog-Paw'], style['Dog-Paw_color_black'], style['Dog-Paw_exists], style['Dog-Paw_color-exists_black-true']]
 
  const sBlockElement = s('Block','Element')(style);
  const sMix = s('Mix')(style);
@@ -94,7 +97,7 @@ function withNaming(preset) {
  sBlockElement({mod: 'value'}, [{color: '#fff'}]);
  // [style['Block-Element'], style['Block-Element_mod_value'], {color: '#fff'}]
 
- @see https://en.bem.info/methodology/naming-convention/#react-style
+ @see https://github.com/gizeasy/bem-react-native
 
  */
 const s = withNaming({
