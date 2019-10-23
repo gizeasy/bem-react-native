@@ -9,53 +9,54 @@ interface IPreset {
 }
 
 function withNaming(preset: IPreset) {
-    const nameSpace = preset.n || '';
-    const modValueDelimiter = preset.v || preset.m;
+    const nameSpace: string = preset.n || '';
+    const modValueDelimiter: string = preset.v || preset.m || '';
 
     function stringify(
         b: string,
         e?: string,
         m?: object | null,
-        mix?: (object | object[])[],
-        styleSheet: object
+        mix?: (object | object[])[] | null,
+        styleSheet?: object
     ) {
-        const entityName = e ? nameSpace + b + preset.e + e : nameSpace + b;
-        let className = [styleSheet[entityName]];
+        const entityName: string = e ? nameSpace + b + preset.e + e : nameSpace + b;
+        const styles = [styleSheet[entityName]];
 
         if (m) {
             const modPrefix = entityName + preset.m;
             for (let k in m) {
                 if (m.hasOwnProperty(k)) {
+                    let modName;
                     const modVal = m[k];
                     if (modVal === true) {
-                        className.push(styleSheet[`${modPrefix + k}`]);
+                        modName = `${modPrefix + k}`;
+                    } else if (Array.isArray(modVal)) {
+                        modName = `${modPrefix + k + modValueDelimiter + modVal.join(preset.cv)}`;
                     } else if (modVal) {
-                        className.push(styleSheet[`${modPrefix + k + modValueDelimiter + modVal}`]);
+                        modName = `${modPrefix + k + modValueDelimiter + modVal}`;
                     }
+                    styleSheet[modName] && styles.push(styleSheet[modName]);
                 }
             }
         }
-        if (mix !== undefined) {
+        if (mix !== undefined && mix !== null) {
             for (let i = 0, len = mix.length; i < len; i++) {
                 if (typeof mix[i] === 'object') {
-                    className.push(mix[i]);
-                }
-                if (typeof mix[i] === 'array') {
+                    styles.push(mix[i]);
+                } else if (Array.isArray(mix[i])) {
                     for (let ii = 0, len = mix[i].length; ii < len; ii++) {
-                        if (typeof mix[i][ii] !== 'object' || !mix[i][ii]) continue;
-                        className.push(mix[i][ii]);
+                        styles.push(mix[i][ii]);
                     }
                 }
             }
         }
-
-        return className;
+        return styles;
     }
-    return function cnGenerator(b: string, e?: string) {
+    return function sGenerator(b: string, e?: string) {
         return function(styleSheet: object) {
             return function(
                 elemOrMods?: string | object | null,
-                elemModsOrBlockMix?: string | object,
+                elemModsOrBlockMix?: (object | object[])[] | null,
                 elemMix?: (object | object[])[]
             ) {
                 if (typeof elemOrMods === 'string') {
@@ -71,6 +72,7 @@ function withNaming(preset: IPreset) {
         };
     };
 }
+
 /**
  * Usage:
  *
