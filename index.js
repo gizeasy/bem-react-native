@@ -1,1 +1,1 @@
-module.exports = require('./bemReactNative.js');
+module.exports = require('./build/bemReactNative.js');
