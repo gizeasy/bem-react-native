@@ -6,6 +6,7 @@
     "typings": "build/bemReactNative.d.ts",
     "scripts": {
         "build": "tsc",
+        "publish": "npm publish",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
@@ -25,7 +26,10 @@
         "url": "https://github.com/gizeasy/react-native-bem/issues"
     },
     "homepage": "https://github.com/gizeasy/react-native-bem#readme",
-    "files": ["build", "classname.d.ts"],
+    "files": [
+        "build",
+        "classname.d.ts"
+    ],
     "devDependencies": {
         "prettier": "^1.18.2",
         "typescript": "^3.6.4"
