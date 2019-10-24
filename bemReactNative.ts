@@ -6,35 +6,35 @@ export interface IPreset {
     cv?: string;
 }
 
-export type b = string;
-export type e = string;
-export type mEntry = string | boolean | number;
-export type m = Record<string, mEntry | Array<mEntry> | undefined>;
-export type mixObjectEntry = Record<string | number, any>;
-export type mix = Array<mixObjectEntry | Array<mixObjectEntry>>;
-export type withNaming = (b: b, e?: e) => setStyle;
-export type elemOrMods = e | m | null;
-export type elemModsOrBlockMix = m | mix | null;
-export type elemMix = mix;
-export type sGenerator = (
-    elemOrMods?: elemOrMods,
-    elemModsOrBlockMix?: elemModsOrBlockMix,
-    elemMix?: elemMix
+export type Tb = string;
+export type Te = string;
+export type TmEntry = string | boolean | number;
+export type Tm = Record<string, TmEntry | Array<TmEntry> | undefined>;
+export type TMixObjectEntry = Record<string | number, any>;
+export type TMix = Array<TMixObjectEntry | Array<TMixObjectEntry>>;
+export type TWithNaming = (b: Tb, e?: Te) => TSetStyle;
+export type TElemOrMods = Te | Tm | null;
+export type TElemModsOrBlockMix = Tm | TMix | null;
+export type TElemMix = TMix;
+export type TsGenerator = (
+    elemOrMods?: TElemOrMods,
+    elemModsOrBlockMix?: TElemModsOrBlockMix,
+    elemMix?: TElemMix
 ) => Array<object> | undefined;
-export type styleSheet = Record<string, object>;
-export type setStyle = (styleSheet: styleSheet) => sGenerator;
+export type TStyleSheet = Record<string, object>;
+export type TSetStyle = (styleSheet: TStyleSheet) => TsGenerator;
 
-export function withNaming(preset: IPreset): withNaming {
+export function withNaming(preset: IPreset): TWithNaming {
     const nameSpace = preset.n || '';
     const modValueDelimiter = preset.v || preset.m;
     const modCompositionValueDelimiter = preset.cv || modValueDelimiter;
 
     function stringify(
-        b: b,
-        e: e | null | undefined,
-        m: m | null | undefined,
-        mix: mix | null | undefined,
-        styleSheet: styleSheet
+        b: Tb,
+        e: Te | null | undefined,
+        m: Tm | null | undefined,
+        mix: TMix | null | undefined,
+        styleSheet: TStyleSheet
     ) {
         const entityName: string = e ? nameSpace + b + preset.e + e : nameSpace + b;
         const styles = [styleSheet[entityName]];
@@ -72,12 +72,12 @@ export function withNaming(preset: IPreset): withNaming {
         }
         return styles;
     }
-    return function sGenerator(b: b, e?: e): setStyle {
-        return function(styleSheet: styleSheet): sGenerator {
+    return function sGenerator(b: Tb, e?: Te): TSetStyle {
+        return function(styleSheet: TStyleSheet): TsGenerator {
             return function(
-                elemOrMods?: elemOrMods,
-                elemModsOrBlockMix?: elemModsOrBlockMix,
-                elemMix?: elemMix
+                elemOrMods?: TElemOrMods,
+                elemModsOrBlockMix?: TElemModsOrBlockMix,
+                elemMix?: TElemMix
             ) {
                 if (typeof elemOrMods === 'string') {
                     if (Array.isArray(elemModsOrBlockMix)) {
@@ -86,7 +86,7 @@ export function withNaming(preset: IPreset): withNaming {
                         return stringify(b, elemOrMods, elemModsOrBlockMix, elemMix, styleSheet);
                     }
                 } else {
-                    return stringify(b, e, elemOrMods, elemModsOrBlockMix as mix, styleSheet);
+                    return stringify(b, e, elemOrMods, elemModsOrBlockMix as TMix, styleSheet);
                 }
             };
         };

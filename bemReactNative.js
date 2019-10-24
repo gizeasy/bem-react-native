@@ -1,35 +1,41 @@
-export function withNaming(preset) {
-    const nameSpace = preset.n || '';
-    const modValueDelimiter = preset.v || preset.m || '';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+function withNaming(preset) {
+    var nameSpace = preset.n || '';
+    var modValueDelimiter = preset.v || preset.m;
+    var modCompositionValueDelimiter = preset.cv || modValueDelimiter;
     function stringify(b, e, m, mix, styleSheet) {
-        const entityName = e ? nameSpace + b + preset.e + e : nameSpace + b;
-        const styles = [styleSheet[entityName]];
+        var entityName = e ? nameSpace + b + preset.e + e : nameSpace + b;
+        var styles = [styleSheet[entityName]];
         if (m) {
-            const modPrefix = entityName + preset.m;
-            for (let k in m) {
+            var modPrefix = entityName + preset.m;
+            for (var k in m) {
                 if (m.hasOwnProperty(k)) {
-                    let modName;
-                    const modVal = m[k];
+                    var modName = void 0;
+                    var modVal = m[k];
                     if (modVal === true) {
-                        modName = `${modPrefix + k}`;
+                        modName = "" + (modPrefix + k);
                     }
                     else if (Array.isArray(modVal)) {
-                        modName = `${modPrefix + k + modValueDelimiter + modVal.join(preset.cv)}`;
+                        modName = "" + (modPrefix +
+                            k +
+                            modValueDelimiter +
+                            modVal.join(modCompositionValueDelimiter));
                     }
                     else if (modVal) {
-                        modName = `${modPrefix + k + modValueDelimiter + modVal}`;
+                        modName = "" + (modPrefix + k + modValueDelimiter + modVal);
                     }
                     styleSheet[modName] && styles.push(styleSheet[modName]);
                 }
             }
         }
         if (mix !== undefined && mix !== null) {
-            for (let i = 0, len = mix.length; i < len; i++) {
+            for (var i = 0, len = mix.length; i < len; i++) {
                 if (typeof mix[i] === 'object') {
                     styles.push(mix[i]);
                 }
                 else if (Array.isArray(mix[i])) {
-                    for (let ii = 0, len = mix[i].length; ii < len; ii++) {
+                    for (var ii = 0, len_1 = mix[i].length; ii < len_1; ii++) {
                         styles.push(mix[i][ii]);
                     }
                 }
@@ -55,7 +61,8 @@ export function withNaming(preset) {
         };
     };
 }
-export const s = withNaming({
+exports.withNaming = withNaming;
+exports.s = withNaming({
     e: '-',
     m: '_',
 });
