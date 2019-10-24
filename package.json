@@ -1,26 +1,37 @@
 {
-  "name": "bem-react-native",
-  "version": "1.1.0",
-  "description": "Tiny helper for building styles with BEM methodology.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gizeasy/bem-react-native.git"
-  },
-  "keywords": [
-    "bem",
-    "react-native-bem",
-    "bem-react-native",
-    "style",
-    "stylesheet"
-  ],
-  "author": "gizeasy",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/gizeasy/bem-react-native/issues"
-  },
-  "homepage": "https://github.com/gizeasy/bem-react-native#readme"
+    "name": "bem-react-native",
+    "version": "1.1.1",
+    "description": "Tiny helper for building styles with BEM methodology.",
+    "main": "index.js",
+    "typings": "build/bemReactNative.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "publish": "yarn build && npm publish",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/gizeasy/react-native-bem.git"
+    },
+    "keywords": [
+        "bem",
+        "react-native-bem",
+        "bem-react-native",
+        "style",
+        "stylesheet"
+    ],
+    "author": "gizeasy",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/gizeasy/react-native-bem/issues"
+    },
+    "homepage": "https://github.com/gizeasy/react-native-bem#readme",
+    "files": [
+        "build",
+        "classname.d.ts"
+    ],
+    "devDependencies": {
+        "prettier": "^1.18.2",
+        "typescript": "^3.6.4"
+    }
 }

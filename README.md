@@ -160,7 +160,7 @@ export const Example = ({ style, globalTheme, accent }) => {
                 style={sExample('Text', {
                     globalTheme,
                     actionAccent,
-                    'globalTheme-accent': [globalTheme, accent],
+                    'globalTheme_accent': [globalTheme, accent],
                 })}
                 size="l"
                 weight="medium"
@@ -178,7 +178,7 @@ export const Example = ({ style, globalTheme, accent }) => {
                 //     exampleStyle['Example-Text'],
                 //     exampleStyle['Example-Text_globalTheme_light'],
                 //     exampleStyle['Example-Text_accent_danger'],
-                //     exampleStyle['Example-Text_globalTheme-accent_light-danger']
+                //     exampleStyle['Example-Text_globalTheme_accent_light_danger']
                 // ];
             }
         </View>
