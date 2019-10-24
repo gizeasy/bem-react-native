@@ -1,12 +1,12 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
         "declaration": true,
         "strict": true,
-        "outDir": "./built",
-        "allowJs": true,
         "target": "es5",
-        "outFile": "./built/index.js"
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "allowSyntheticDefaultImports": true
     },
-    "include": ["./bemReactNative.ts"]
+    "files": ["bemReactNative.ts"]
 }

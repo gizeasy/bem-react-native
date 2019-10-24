@@ -1,6 +1,4 @@
-'use strict';
-
-interface IPreset {
+export interface IPreset {
     n?: string;
     e?: string;
     m?: string;
@@ -8,16 +6,35 @@ interface IPreset {
     cv?: string;
 }
 
-function withNaming(preset: IPreset) {
-    const nameSpace: string = preset.n || '';
-    const modValueDelimiter: string = preset.v || preset.m || '';
+export type b = string;
+export type e = string;
+export type mEntry = string | boolean | number;
+export type m = Record<string, mEntry | Array<mEntry> | undefined>;
+export type mixObjectEntry = Record<string | number, any>;
+export type mix = Array<mixObjectEntry | Array<mixObjectEntry>>;
+export type withNaming = (b: b, e?: e) => setStyle;
+export type elemOrMods = e | m | null;
+export type elemModsOrBlockMix = m | mix | null;
+export type elemMix = mix;
+export type sGenerator = (
+    elemOrMods?: elemOrMods,
+    elemModsOrBlockMix?: elemModsOrBlockMix,
+    elemMix?: elemMix
+) => Array<object> | undefined;
+export type styleSheet = Record<string, object>;
+export type setStyle = (styleSheet: styleSheet) => sGenerator;
+
+export function withNaming(preset: IPreset): withNaming {
+    const nameSpace = preset.n || '';
+    const modValueDelimiter = preset.v || preset.m;
+    const modCompositionValueDelimiter = preset.cv || modValueDelimiter;
 
     function stringify(
-        b: string,
-        e?: string,
-        m?: object | null,
-        mix?: (object | object[])[] | null,
-        styleSheet?: object
+        b: b,
+        e: e | null | undefined,
+        m: m | null | undefined,
+        mix: mix | null | undefined,
+        styleSheet: styleSheet
     ) {
         const entityName: string = e ? nameSpace + b + preset.e + e : nameSpace + b;
         const styles = [styleSheet[entityName]];
@@ -31,11 +48,14 @@ function withNaming(preset: IPreset) {
                     if (modVal === true) {
                         modName = `${modPrefix + k}`;
                     } else if (Array.isArray(modVal)) {
-                        modName = `${modPrefix + k + modValueDelimiter + modVal.join(preset.cv)}`;
+                        modName = `${modPrefix +
+                            k +
+                            modValueDelimiter +
+                            modVal.join(modCompositionValueDelimiter)}`;
                     } else if (modVal) {
                         modName = `${modPrefix + k + modValueDelimiter + modVal}`;
                     }
-                    styleSheet[modName] && styles.push(styleSheet[modName]);
+                    styleSheet[modName as string] && styles.push(styleSheet[modName as string]);
                 }
             }
         }
@@ -52,12 +72,12 @@ function withNaming(preset: IPreset) {
         }
         return styles;
     }
-    return function sGenerator(b: string, e?: string) {
-        return function(styleSheet: object) {
+    return function sGenerator(b: b, e?: e): setStyle {
+        return function(styleSheet: styleSheet): sGenerator {
             return function(
-                elemOrMods?: string | object | null,
-                elemModsOrBlockMix?: (object | object[])[] | null,
-                elemMix?: (object | object[])[]
+                elemOrMods?: elemOrMods,
+                elemModsOrBlockMix?: elemModsOrBlockMix,
+                elemMix?: elemMix
             ) {
                 if (typeof elemOrMods === 'string') {
                     if (Array.isArray(elemModsOrBlockMix)) {
@@ -66,7 +86,7 @@ function withNaming(preset: IPreset) {
                         return stringify(b, elemOrMods, elemModsOrBlockMix, elemMix, styleSheet);
                     }
                 } else {
-                    return stringify(b, e, elemOrMods, elemModsOrBlockMix, styleSheet);
+                    return stringify(b, e, elemOrMods, elemModsOrBlockMix as mix, styleSheet);
                 }
             };
         };
@@ -111,9 +131,7 @@ function withNaming(preset: IPreset) {
  *
  */
 
-const s = withNaming({
+export const s = withNaming({
     e: '-',
     m: '_',
 });
-
-module.exports.s = s;

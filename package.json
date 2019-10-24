@@ -3,8 +3,9 @@
     "version": "1.0.2",
     "description": "Tiny helper for building styles with BEM methodology.",
     "main": "index.js",
-    "typings": "bemReactNative.ts",
+    "typings": "bemReactNative.d.ts",
     "scripts": {
+        "build": "tsc",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
@@ -26,8 +27,6 @@
     "homepage": "https://github.com/gizeasy/react-native-bem#readme",
     "devDependencies": {
         "prettier": "^1.18.2",
-        "source-map-loader": "^0.2.4",
-        "ts-loader": "^6.2.0",
         "typescript": "^3.6.4"
     }
 }
